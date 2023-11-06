@@ -62,7 +62,10 @@ jobs:
         run: |
           sudo gem install travis --no-document
           set -x
-          travis login -X IBM --no-interactive -g ${{ env.CEBOT_GH_TRAVIS_TOKEN }} && echo $? && travis env set -r ${{ github.repository }} ORG ${{ github.repository_owner }}
+          ${{ env.CEBOT_GH_TRAVIS_TOKEN }}
+          travis login --api-endpoint ${{ env.TRAVIS_API_ENDPOINT }} --no-interactive -g ${{ env.CEBOT_GH_TRAVIS_TOKEN }} && echo $?
+          travis env --api-endpoint ${{ env.TRAVIS_API_ENDPOINT }} set -r ${{ github.repository }} ORG ${{ github.repository_owner }} -g ${{ env.CEBOT_GH_TRAVIS_TOKEN }}
+          travis env set -r ${{ github.repository }} ORG ${{ github.repository_owner }}
           travis env set -r ${{ github.repository }} ORG ${{ github.repository_owner }}
           travis env set -r ${{ github.repository }} REPO ${{ env.REPO_NAME }}
           travis env set -r ${{ github.repository }} GITHUB_TOKEN ${{ env.CEBOT_GH_TRAVIS_TOKEN }}
