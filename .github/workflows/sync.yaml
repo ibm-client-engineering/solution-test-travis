@@ -64,7 +64,7 @@ jobs:
           gh auth login -p https -h ${{ env.ENTERPRISE_URL }} --with-token < /tmp/token.txt
           sudo gem install travis --no-document
           set -x
-          travis login --api-endpoint ${{ env.TRAVIS_API_ENDPOINT }} --no-interactive -g ${{ env.CEBOT_GH_TRAVIS_TOKEN }}
+          travis login -X IBM --no-interactive -g ${{ env.CEBOT_GH_TRAVIS_TOKEN }}
           travis env -X IBM set -r ${{ github.repository }} ORG ${{ github.repository_owner }} -g ${{ env.CEBOT_GH_TRAVIS_TOKEN }}
           travis env set -r ${{ github.repository }} ORG ${{ github.repository_owner }}
           travis env set -r ${{ github.repository }} REPO ${{ env.REPO_NAME }}
