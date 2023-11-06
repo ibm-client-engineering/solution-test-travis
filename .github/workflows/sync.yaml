@@ -65,7 +65,25 @@ jobs:
           -H "Content-Type: application/json" \
           -H "Travis-API-Version: 3" \
           -H "Authorization: token ${{ env.CEBOT_TRAVIS_API_KEY }}" \
-          -d '{ "env_var.name": "ORG", "env_var.value": "ibm-client-engineering", "env_var.public": true }' \
+          -d '{ "env_var.name": "ORG", "env_var.value": "${{ github.repository_owner }}", "env_var.public": true }' \
+          ${{ env.TRAVIS_API_ENDPOINT }}/repo/${{ github.repository_owner }}%2F${{ env.REPO_NAME }}/env_vars
+          curl -X POST \
+          -H "Content-Type: application/json" \
+          -H "Travis-API-Version: 3" \
+          -H "Authorization: token ${{ env.CEBOT_TRAVIS_API_KEY }}" \
+          -d '{ "env_var.name": "REPO", "env_var.value": "${{ env.REPO_NAME }}", "env_var.public": true }' \
+          ${{ env.TRAVIS_API_ENDPOINT }}/repo/${{ github.repository_owner }}%2F${{ env.REPO_NAME }}/env_vars
+          curl -X POST \
+          -H "Content-Type: application/json" \
+          -H "Travis-API-Version: 3" \
+          -H "Authorization: token ${{ env.CEBOT_TRAVIS_API_KEY }}" \
+          -d '{ "env_var.name": "GITHUB_TOKEN", "env_var.value": "${{ env.CEBOT_GH_TRAVIS_TOKEN }}", "env_var.public": true }' \
+          ${{ env.TRAVIS_API_ENDPOINT }}/repo/${{ github.repository_owner }}%2F${{ env.REPO_NAME }}/env_vars
+          curl -X POST \
+          -H "Content-Type: application/json" \
+          -H "Travis-API-Version: 3" \
+          -H "Authorization: token ${{ env.CEBOT_TRAVIS_API_KEY }}" \
+          -d '{ "env_var.name": "PAGES_URL", "env_var.value": "${{ env.ENTERPRISE_PAGES_URL }}", "env_var.public": true }' \
           ${{ env.TRAVIS_API_ENDPOINT }}/repo/${{ github.repository_owner }}%2F${{ env.REPO_NAME }}/env_vars
 
 #          sudo gem install travis --no-document
