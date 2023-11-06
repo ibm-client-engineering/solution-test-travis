@@ -60,12 +60,9 @@ jobs:
         env:
           REPO_NAME: ${{ steps.repo_name.outputs.REPO_NAME }}
         run: |
-          echo ${{ env.GITHUB_TOKEN }} > /tmp/token.txt
-          gh auth login -p https -h ${{ env.ENTERPRISE_URL }} --with-token < /tmp/token.txt
           sudo gem install travis --no-document
           set -x
-          travis login -X IBM --no-interactive -g ${{ env.CEBOT_GH_TRAVIS_TOKEN }}
-          travis env -X IBM set -r ${{ github.repository }} ORG ${{ github.repository_owner }} -g ${{ env.CEBOT_GH_TRAVIS_TOKEN }}
+          travis login -X IBM --no-interactive -g ${{ env.CEBOT_GH_TRAVIS_TOKEN }} && echo $? && travis env set -r ${{ github.repository }} ORG ${{ github.repository_owner }}
           travis env set -r ${{ github.repository }} ORG ${{ github.repository_owner }}
           travis env set -r ${{ github.repository }} REPO ${{ env.REPO_NAME }}
           travis env set -r ${{ github.repository }} GITHUB_TOKEN ${{ env.CEBOT_GH_TRAVIS_TOKEN }}
