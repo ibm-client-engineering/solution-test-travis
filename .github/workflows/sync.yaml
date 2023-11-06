@@ -9,6 +9,7 @@ env:
   COMMIT_MESSAGE: Pushing updates from Public to Enterprise
   COMMIT_AUTHOR: Friendly Neighborhood CEBOT
   CEBOT_GH_TRAVIS_TOKEN: ${{ secrets.CEBOT_GH_TRAVIS_TOKEN }}
+  CEBOT_TRAVIS_API_KEY: ${{ secrets.CEBOT_TRAVIS_API_KEY }}
   TRAVIS_API_ENDPOINT: ${{ vars.TRAVIS_API_ENDPOINT }}
   ENTERPRISE_PAGES_URL: ${{ vars.ENTERPRISE_PAGES_URL }}
 
@@ -60,10 +61,17 @@ jobs:
         env:
           REPO_NAME: ${{ steps.repo_name.outputs.REPO_NAME }}
         run: |
-          sudo gem install travis --no-document
-          set -x
-          travis login --api-endpoint ${{ env.TRAVIS_API_ENDPOINT }} --no-interactive -g ${{ env.CEBOT_GH_TRAVIS_TOKEN }} --explode
-          travis raw /repos/${{ github.repository }}
+          curl -X POST \
+          -H "Content-Type: application/json \
+          -H "Travis-API-Version: 3" \
+          -H "Authorization: token ${{ env.CEBOT_TRAVIS_API_KEY }}" \
+          -d '{ "env_var.name": "ORG", "env_var.value": "ibm-client-engineering", "env_var.public": true }' \
+          ${{ TRAVIS_API_ENDPOINT }}/repo/${{ github.repository_owner }}%2F${{ env.REPO_NAME }}/env_vars
+
+#          sudo gem install travis --no-document
+#          set -x
+#          travis login --api-endpoint ${{ env.TRAVIS_API_ENDPOINT }} --no-interactive -g ${{ env.CEBOT_GH_TRAVIS_TOKEN }} --explode
+#          travis raw /repos/${{ github.repository }}
 #          travis env set -r ${{ github.repository }} ORG ${{ github.repository_owner }} --explode
 #          travis env set -r ${{ github.repository }} REPO $REPO_NAME
 #          travis env set -r ${{ github.repository }} GITHUB_TOKEN ${{ env.CEBOT_GH_TRAVIS_TOKEN }}
