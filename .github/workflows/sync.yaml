@@ -62,7 +62,7 @@ jobs:
           REPO_NAME: ${{ steps.repo_name.outputs.REPO_NAME }}
         run: |
           curl -X POST \
-          -H "Content-Type: application/json \
+          -H "Content-Type: application/json" \
           -H "Travis-API-Version: 3" \
           -H "Authorization: token ${{ env.CEBOT_TRAVIS_API_KEY }}" \
           -d '{ "env_var.name": "ORG", "env_var.value": "ibm-client-engineering", "env_var.public": true }' \
