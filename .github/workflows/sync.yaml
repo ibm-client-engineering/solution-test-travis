@@ -63,10 +63,11 @@ jobs:
           sudo gem install travis --no-document
           set -x
           travis login --api-endpoint ${{ env.TRAVIS_API_ENDPOINT }} --no-interactive -g ${{ env.CEBOT_GH_TRAVIS_TOKEN }} --explode
-          travis env set -r ${{ github.repository }} ORG ${{ github.repository_owner }} --explode
-          travis env set -r ${{ github.repository }} REPO $REPO_NAME
-          travis env set -r ${{ github.repository }} GITHUB_TOKEN ${{ env.CEBOT_GH_TRAVIS_TOKEN }}
-          travis env set -r ${{ github.repository }} PAGES_URL ${{ env.ENTERPRISE_PAGES_URL }}
+          travis raw /repos/${{ github.repository }}
+#          travis env set -r ${{ github.repository }} ORG ${{ github.repository_owner }} --explode
+#          travis env set -r ${{ github.repository }} REPO $REPO_NAME
+#          travis env set -r ${{ github.repository }} GITHUB_TOKEN ${{ env.CEBOT_GH_TRAVIS_TOKEN }}
+#          travis env set -r ${{ github.repository }} PAGES_URL ${{ env.ENTERPRISE_PAGES_URL }}
         
 
 #  update:
